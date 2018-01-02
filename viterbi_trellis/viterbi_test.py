@@ -19,16 +19,12 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(best_path, [1, 1, 2])
 
     def test_empty_trellis(self):
-        # Note that layer elements in the test trellis here aren't sorted numerically, in order to have a more
-        # interesting result path.
-        v = ViterbiTrellis([], lambda x: x, lambda x, y: abs(y - x))
+        v = ViterbiTrellis([], lambda x: x, lambda x, y: y)
         best_path = v.viterbi_best_path()
         self.assertEqual(best_path, [])
 
     def test_empty_trellis_layer(self):
-        # Note that layer elements in the test trellis here aren't sorted numerically, in order to have a more
-        # interesting result path.
-        v = ViterbiTrellis([[2, 6, 4], [], [0, 2, 6]], lambda x: x, lambda x, y: abs(y - x))
+        v = ViterbiTrellis([[2, 6, 4], [], [0, 2, 6]], lambda x: x, lambda x, y: y)
         with self.assertRaises(ViterbiTrellisEmptyLayerException):
             best_path = v.viterbi_best_path()
 
