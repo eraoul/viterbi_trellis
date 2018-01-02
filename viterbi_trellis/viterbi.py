@@ -1,7 +1,8 @@
+from exceptions import ViterbiTrellisEmptyLayerException
 from utils import argmin
 
 
-class ViterbiTrellis():
+class ViterbiTrellis:
     """
     Class to store a trellis graph and to compute the best path through the graph.
 
@@ -35,6 +36,8 @@ class ViterbiTrellis():
         Returns:
           List of state indices: one state for each timestamp.
         """
+        if not self.trellis:
+            return []
 
         # List of lists: each list is a list of indices of the best previous state for the given
         # current state. That is, this is structured like trellis, but stores pointers (indices)
@@ -48,6 +51,8 @@ class ViterbiTrellis():
         prev_layer = None
         prev_total_costs = [0]
         for layer in self.trellis:
+            if not layer:
+                raise ViterbiTrellisEmptyLayerException('Empty layer encountered in trellis')
             total_costs = []
             best_parents = []
             for state in layer:
@@ -95,4 +100,4 @@ class ViterbiTrellis():
             next_state = parents[next_state]
             best_states.append(next_state)
         best_states.pop()
-        return best_states
+        return list(reversed(best_states))
