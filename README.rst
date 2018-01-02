@@ -25,6 +25,7 @@ the Viterbi algorithm.
 
 Example usage::
 
+    from viterbi_trellis import ViterbiTrellis
     v = ViterbiTrellis([[2, 6, 4], [4, 6], [0, 2, 6]], lambda x: x / 2.0, lambda x, y: abs(y - x))
     best_path = v.viterbi_best_path()
 
