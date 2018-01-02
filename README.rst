@@ -15,7 +15,9 @@ compute the best path through a trellis graph. The user must provide three input
 single layer of the trellis. The first item in the outer list is the start layer, while the
 final item is the end layer. Each innermost item is an object representing the state. This
 could be a primitive type such as an int, or it could be a tuple or user-defined class.
+
 2. A **cost function** giving the cost for being in a given state.
+
 3. A **transition function** giving the cost of transitioning between two particular states.
 
 The best path is chosen by globally minimizing the sum of the state costs and transitions via
