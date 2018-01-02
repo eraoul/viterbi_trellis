@@ -12,9 +12,9 @@ This library provides the class ViterbiTrellis. At present it can only do one th
 compute the best path through a trellis graph. The user must provide three inputs:
 
 1. **Trellis layer structure**, specified as a list of lists. Each inner list corresponds to a
-single layer of the trellis. The first item in the outer list is the start layer, while the
-final item is the end layer. Each innermost item is an object representing the state. This
-could be a primitive type such as an int, or it could be a tuple or user-defined class.
+   single layer of the trellis. The first item in the outer list is the start layer, while the
+   final item is the end layer. Each innermost item is an object representing the state. This
+   could be a primitive type such as an int, or it could be a tuple or user-defined class.
 
 2. A **cost function** giving the cost for being in a given state.
 
@@ -31,5 +31,7 @@ Example usage::
 The return value in best_path is a list of indices of the states in the best path::
 
     >>> best_path
-    [2, 0, 1]  # This corresponds to the states labeled [4, 4, 2] in the input trellis.
+    [2, 0, 1]
+
+This result corresponds to the states labeled `[4, 4, 2]` in the input trellis.
 
