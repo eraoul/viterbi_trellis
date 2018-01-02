@@ -1,32 +1,33 @@
-A sample Python project
+viterbi_trellis
 =======================
 
-A sample project that exists as an aid to the `Python Packaging User Guide
-<https://packaging.python.org>`_'s `Tutorial on Packaging and Distributing
-Projects <https://packaging.python.org/en/latest/distributing.html>`_.
-
-This projects does not aim to cover best practices for Python project
-development as a whole. For example, it does not provide guidance or tool
-recommendations for version control, documentation, or testing.
+Library to compute the best path through a trellis graph using the Viterbi algorithm.
 
 `The source for this project is available here
-<https://github.com/pypa/sampleproject>`_.
-
-Most of the configuration for a Python project is done in the ``setup.py``
-file, an example of which is included in this project. You should edit this
-file accordingly to adapt this sample project to your needs.
+<https://github.com/eraoul/viterbi_trellis>`_.
 
 ----
 
-This is the README file for the project.
+This library provides the class ViterbiTrellis. At present it can only do one thing:
+compute the best path through a trellis graph. The user must provide three inputs:
 
-The file should use UTF-8 encoding and be written using `reStructuredText
-<http://docutils.sourceforge.net/rst.html>`_. It
-will be used to generate the project webpage on PyPI and will be displayed as
-the project homepage on common code-hosting services, and should be written for
-that purpose.
+ 1. **Trellis layer structure**, specified as a list of lists. Each inner list corresponds to a
+single layer of the trellis. The first item in the outer list is the start layer, while the
+final item is the end layer. Each innermost item is an object representing the state. This
+could be a primitive type such as an int, or it could be a tuple or user-defined class.
+ 2. A **cost function** giving the cost for being in a given state.
+ 3. A **transition function** giving the cost of transitioning between two particular states.
 
-Typical contents for this file would include an overview of the project, basic
-usage examples, etc. Generally, including the project changelog in here is not
-a good idea, although a simple "What's New" section for the most recent version
-may be appropriate.
+The best path is chosen by globally minimizing the sum of the state costs and transitions via
+the Viterbi algorithm.
+
+Example usage::
+
+    v = ViterbiTrellis([[2, 6, 4], [4, 6], [0, 2, 6]], lambda x: x / 2.0, lambda x, y: abs(y - x))
+    best_path = v.viterbi_best_path()
+
+The return value in best_path is a list of indices of the states in the best path::
+
+    >>> best_path
+    [2, 0, 1]  # This corresponds to the states labeled [4, 4, 2] in the input trellis.
+
