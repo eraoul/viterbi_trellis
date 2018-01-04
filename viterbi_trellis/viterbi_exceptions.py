@@ -2,7 +2,7 @@
 
 
 class ViterbiTrellisException(Exception):
-    """Base exception class for teh viterbi_trellis library."""
+    """Base exception class for the viterbi_trellis library."""
     pass
 
 
