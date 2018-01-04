@@ -4,7 +4,8 @@ from .utils import argmin
 
 class ViterbiTrellis:
     """
-    Class to store a trellis graph and to compute the best path through the graph.
+    Class to store a trellis graph and to compute the best path through the
+    graph.
 
     Example usage:
 
@@ -17,21 +18,23 @@ class ViterbiTrellis:
         Initialize the trellis graph.
 
         Params:
-            trellis: a list of lists. First dimension is the timestep. Second dimentison is the state
-                index within one timestep. Value is an object giving a representation of the state;
-                could be an int, tuple, object instance, etc.
-            state_cost_fn: function taking one argument: (state), of the same type as stored in the
-                lattice. Returns a float giving the cost of having the given state in the best path.
-            transition_cost_fn: function taking two arguments: (state1, state2). Returns a float
-                giving the cost of this transition.
+            trellis: a list of lists. First dimension is the timestep. Second
+                dimension is the state index within one timestep. Value is an
+                object giving a representation of the state; could be an int,
+                tuple, object instance, etc.
+            state_cost_fn: function taking one argument: (state), of the same
+                type as stored in the lattice. Returns a float giving the cost
+                of having the given state in the best path.
+            transition_cost_fn: function taking two arguments:
+                (state1, state2). Returns a float giving the cost of this
+                transition.
         """
         self.trellis = trellis
         self.state_cost_fn = state_cost_fn
         self.transition_cost_fn = transition_cost_fn
 
-
     def viterbi_best_path(self):
-        """Compute the best path through a trellis graph minimizing the path cost.
+        """Compute a path through a trellis graph minimizing the path cost.
 
         Returns:
           List of state indices: one state for each timestamp.
@@ -39,9 +42,10 @@ class ViterbiTrellis:
         if not self.trellis:
             return []
 
-        # List of lists: each list is a list of indices of the best previous state for the given
-        # current state. That is, this is structured like trellis, but stores pointers (indices)
-        # to previous states instead of state representations.
+        # List of lists: each list is a list of indices of the best previous
+        # state for the given current state. That is, this is structured like
+        # trellis, but stores pointers (indices) to previous states instead of
+        # state representations.
         trellis_best_parents = []
 
         # As above, but for total path cost to each point, not parent indices.
@@ -52,21 +56,26 @@ class ViterbiTrellis:
         prev_total_costs = [0]
         for layer in self.trellis:
             if not layer:
-                raise ViterbiTrellisEmptyLayerException('Empty layer encountered in trellis')
+                raise ViterbiTrellisEmptyLayerException(
+                    'Empty layer encountered in trellis')
             total_costs = []
             best_parents = []
             for state in layer:
                 # List of total costs of getting here from each previous state.
                 possible_path_costs = []
                 if prev_layer:
-                    # Compute the cost of each possible transition to this state, and combine
-                    # with the total path cost of getting to the previous state.
+                    # Compute the cost of each possible transition to this
+                    # state, and combine with the total path cost of getting to
+                    # the previous state.
                     for i, prev_state in enumerate(prev_layer):
-                        transition_cost = self.transition_cost_fn(prev_state, state)
-                        possible_path_costs.append(transition_cost + prev_total_costs[i])
+                        transition_cost = self.transition_cost_fn(prev_state,
+                                                                  state)
+                        possible_path_costs.append(
+                            transition_cost + prev_total_costs[i])
                 else:
-                    # No previous layer. Just store a cost of 0.  # Essentially this creates a common
-                    # "START" node, idx 0, that all first-layer nodes connect to.
+                    # No previous layer. Just store a cost of 0.  Essentially
+                    # this creates a common "START" node, idx 0, that all
+                    # first-layer nodes connect to.
                     possible_path_costs.append(0)
 
                 # Find the min and argmin.

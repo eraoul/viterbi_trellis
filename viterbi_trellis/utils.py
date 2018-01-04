@@ -2,6 +2,7 @@
 #
 # argmin is defined here to avoid dependence on e.g., numpy.
 
+
 def argmin(list_obj):
     """Returns the index of the min value in the list."""
     min = None
