@@ -1,8 +1,6 @@
-from __future__ import absolute_import
-
 import unittest
-from viterbi import ViterbiTrellis
-from viterbi_exceptions import ViterbiTrellisEmptyLayerException
+from .viterbi import ViterbiTrellis
+from .viterbi_exceptions import ViterbiTrellisEmptyLayerException
 
 
 class MyTestCase(unittest.TestCase):

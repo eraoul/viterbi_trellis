@@ -1,5 +1,5 @@
-from viterbi_exceptions import ViterbiTrellisEmptyLayerException
-from utils import argmin
+from .viterbi_exceptions import ViterbiTrellisEmptyLayerException
+from .utils import argmin
 
 
 class ViterbiTrellis:
